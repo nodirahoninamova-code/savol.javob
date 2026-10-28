@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingliz Tili Viktorinasi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            background-color: white;
+            color: #007bff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        #score-text {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Ingliz Dili Viktorinasi 🇬🇧</h2>
+    <div id="question-text">Savol yuklanmoqda...</div>
+    <div class="btn-container" id="options-container"></div>
+    <div id="score-text">Xal: <span id="score">0</span></div>
+</div>
+
+<script>
+    const questions = [
+        { question: "'Apple' so'zining ma'nosi nima?", options: ["Olma", "Nok", "Uzum"], answer: "Olma" },
+        { question: "'Cat' qaysi hayvon?", options: ["It", "Mushuk", "Quyon"], answer: "Mushuk" },
+        { question: "'Book' nimani bildiradi?", options: ["Qalam", "Daftar", "Kitob"], answer: "Kitob" },
+        { question: "'Thank you' so'zining tarjimasi?", options: ["Rahmat", "Xayr", "Salom"], answer: "Rahmat" }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    let qIndex = 0;
+
+    function showQuestion() {
+        if (currentQuestionIndex >= questions.length) return;
+        const q = questions[currentQuestionIndex];
+        document.getElementById("question-text").innerText = (currentQuestionIndex + 1) + ". " + q.question;
+        const optionsDiv = document.getElementById("options-container");
+        optionsDiv.innerHTML = "";
+
+        q.options.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(opt);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selectedOption) {
+        if (selectedOption === questions[currentQuestionIndex].answer) {
+            score += 10;
+            document.getElementById("score").innerText = score;
+            alert("To'g'ri javob! 🎉");
+        } else {
+            alert("Noto'g'ri javob ❌");
+        }
+
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            document.getElementById("question-text").innerText = "O'yin tugadi! Umumiy xalingiz: " + score;
+            document.getElementById("options-container").innerHTML = "<button onclick='location.reload()'>Qaytadan boshlash</button>";
+        }
+    }
+
+    showQuestion();
+</script>
+
+</body>
+</html>
